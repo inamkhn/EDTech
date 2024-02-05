@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon api/server.js"
+    "server": "nodemon api/server.js",
+    "start": "node api/server.js",
+    "build": "npm install && npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +27,7 @@
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.2",
+    "path": "^0.12.7",
     "stripe": "^14.10.0",
     "validator": "^13.11.0"
   }

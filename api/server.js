@@ -7,7 +7,7 @@ import cloudinary from 'cloudinary'
 import cors from 'cors'
 import messageRoute from './routes/messageRoute.js'
 import conversationRoute from './routes/conversationRoute.js' 
-
+import path from 'path';
 
 const app = express()
 
@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.use(cors())
-
+const __dirname = path.resolve();
 
 
 app.use("/api/v1",courseRouter)
@@ -73,6 +73,13 @@ const connect = () => {
       throw err;
     });
 };
+
+
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
 
 
 app.listen(5000 ,()=>{
