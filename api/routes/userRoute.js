@@ -15,12 +15,12 @@ router.route('/login').post(login)
 router.route('/logout').get(logout)
 router.route('/me').get(isAuthenticated,getMyProfile)
 router.route('/changepassword').put(isAuthenticated,changePassword)
-router.route('/updateprofile').post(isAuthenticated,updateProfile)
+router.route('/updateprofile/:id').put(updateProfile)  //isAuthenticated,
 router.route("/updateprofilepicture").put(isAuthenticated,singleUpload,updateprofilepicture);
 // ForgetPassword
 router.route("/forgetpassword").post(forgetPassword)
 
-router.route("/addToPlaylist/:id").post(isAuthenticated,addToPlaylist)
+router.route("/addToPlaylist/:id").post(addToPlaylist) //isAuthenticated
 router.route("/removeFromPlaylist/:id").post(removeFromPlaylist)
 // ResetPassword
 router.route("/resetpassword/:token").put(resetpassword);

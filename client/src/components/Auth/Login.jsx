@@ -34,7 +34,7 @@ const Login = () => {
       }
       toast.success('Successfully login')
       dispatch(signinSuccess(data));
-      navigate('/');
+      setInterval(navigate('/'),2000)
     } catch (error) {
       toast.warning("some thing error found")
       dispatch(signinFailure(error.message)); 

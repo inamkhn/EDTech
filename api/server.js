@@ -5,6 +5,9 @@ import cookieParser from "cookie-parser"
 import bodyParser from "body-parser"
 import cloudinary from 'cloudinary'
 import cors from 'cors'
+import messageRoute from './routes/messageRoute.js'
+import conversationRoute from './routes/conversationRoute.js' 
+
 
 const app = express()
 
@@ -40,6 +43,8 @@ app.use(cors())
 app.use("/api/v1",courseRouter)
 app.use("/api/v1",userRouter)
 app.use("/api/v1",paymentRouter)
+app.use("/api/v1",messageRoute)
+app.use("/api/v1",conversationRoute)
 
 class Errorhandler extends Error{
   constructor(message,statusCode){

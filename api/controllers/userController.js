@@ -133,11 +133,12 @@ export const changePassword = async (req, res, next) => {
 
 export const updateProfile = async (req, res, next) => {
   const { name, email } = req.body;
+  const id = req.params.id
 
   if (!name || !email)
     return next(new ErrorHandler("Please enter all field", 400));
 
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(id);
   if (name) user.name = name;
   if (email) user.email = email;
 
@@ -221,10 +222,12 @@ export const resetpassword = async (req, res, next) => {
 };
 
 export const addToPlaylist = async (req, res, next) => {
-  const id = req.params.id
-  const user = await User.findById(id);
+  const {id} = req.body
+  const userid = req.params.id
 
-  const course = await Course.findById(req.body.id);
+  const user = await User.findById(userid);
+
+  const course = await Course.findById(id);
   if (!course) return next(new ErrorHandler("Invalid Course Id", 404));
 
   const itemExist = user.playlist.find((item) => {

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { updateFailure, updateStart, updateSuccess } from "../redux/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios'
+import {updateProfileFail, updateProfileRequest, updateProfileSuccess} from '../redux/profileSlice'
 
 const UpdateProfile = () => {
   const [input,setInput] = useState({
@@ -12,35 +14,36 @@ const UpdateProfile = () => {
   })
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const {_id} = useSelector(state=>state.user.currentUser.user)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(updateStart());
-      const res = await fetch('/api/v1/updateprofile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(input)
-      });
-      console.log(res);
-      if (res.success === false) {
-        dispatch(updateFailure(res.message));
-        return;
-      }
-      dispatch(updateSuccess(res));
+      dispatch(updateProfileRequest());
+      const { data } = await axios.put(
+        `/api/v1/updateprofile/${_id}`,
+          input,
+        {
+          headers: {
+            'Content-type': 'application/json',
+          },
+  
+          withCredentials: true,
+        }
+      );
+      console.log(data)
+      dispatch(updateProfileSuccess(data.message));
       toast('Successfully Updated')
-      // setTimeout(navigate('/profile'),3000)
+      setInterval(navigate('/profile'),3000)
     } catch (error) {
       toast.warning("some thing error found")
-      dispatch(updateFailure(error.message));
+      dispatch(updateProfileFail(error.response.data.message))
     }
   };
 
   return (
     <>
     <ToastContainer/>
-      <section className="h-screen">
+      <section className="my-24">
         <div className="px-6 h-full text-gray-800">
           <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
             <div className="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">

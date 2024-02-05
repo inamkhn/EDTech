@@ -10,7 +10,7 @@ const initialState = {
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
+  reducers: {  
     signinStart: (state) => {
       state.loading = false;
       state.isAuthenticated = false;

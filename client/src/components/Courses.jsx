@@ -59,7 +59,7 @@ const Courses = () => {
   const [course, setCourse] = useState([]);
 
   const dispatch = useDispatch();
-  const {currentUser} = useSelector(state=>state.user)
+  const {_id} = useSelector(state=>state.user.currentUser.user)
   const categories = [
     "Web Development",
     "Devops",
@@ -85,6 +85,7 @@ const Courses = () => {
 
 
   const addToPlaylistHandler = async(id)=>{
+    
     try {
       dispatch(addToPlaylistRequest());
   
@@ -97,14 +98,16 @@ const Courses = () => {
         withCredentials: true,
         
       };
-  
+      
       const { data } = await axios.post(
-          `/api/v1/addToPlaylist/${currentUser._id}`,
+          `/api/v1/addToPlaylist/${_id}`,
         {
           id
         },
         config
       );
+      console.log(id)
+      console.log(_id)
       toast.success("Course Addedd Successfully")
       dispatch(addToPlaylistSuccess(data.message));
     } catch (error) {
@@ -147,7 +150,7 @@ const Courses = () => {
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 grid-cols-4 gap-2">
+      <div className="grid sm:grid-cols-1 md:grid-cols-3 grid-cols-6 gap-2">
         {course.map((val,index) => {
           return (
             <>

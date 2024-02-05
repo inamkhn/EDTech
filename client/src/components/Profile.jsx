@@ -12,8 +12,9 @@ const Profile = () => {
   const [file,setFile] = useState('')
   const fileRef = useRef(file)
   const dispatch = useDispatch()
-  const {name,email,createdAt,subscription,role,playlist,avatar} = useSelector(state=>state.user.currentUser)
+  const {name,email,createdAt,subscription,role,playlist,avatar} = useSelector(state=>state.user.currentUser.user)
 
+  console.log(name,email,createdAt,subscription,role,playlist,avatar)
   // const changeImageHandler = e => {
   //   const file = e.target.files[0];
   //   const reader = new FileReader();
