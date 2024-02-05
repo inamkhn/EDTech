@@ -6,9 +6,7 @@ import { sendToken } from "../utils/sendToken.js";
 import crypto from "crypto";
 import getDataUri from "../utils/dataUri.js";
 import cloudinary from "cloudinary";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { asyncError } from "../middlewares/asyncError.js";
+
 
 export const getallusers = async (req, res, next) => {
   const user = await User.find();
